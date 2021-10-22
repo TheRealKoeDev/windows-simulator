@@ -1,0 +1,128 @@
+{
+  "version": 1,
+  "projects": {
+    "windows-simulator": {
+      "projectType": "application",
+      "root": "apps/windows-simulator",
+      "sourceRoot": "apps/windows-simulator/src",
+      "prefix": "windows-simulator",
+      "architect": {
+        "build": {
+          "builder": "@angular-devkit/build-angular:browser",
+          "outputs": ["{options.outputPath}"],
+          "options": {
+            "outputPath": "dist/apps/windows-simulator",
+            "index": "apps/windows-simulator/src/index.html",
+            "main": "apps/windows-simulator/src/main.ts",
+            "polyfills": "apps/windows-simulator/src/polyfills.ts",
+            "tsConfig": "apps/windows-simulator/tsconfig.app.json",
+            "inlineStyleLanguage": "scss",
+            "assets": [
+              "apps/windows-simulator/src/favicon.ico",
+              "apps/windows-simulator/src/assets"
+            ],
+            "styles": ["apps/windows-simulator/src/styles.scss"],
+            "scripts": []
+          },
+          "configurations": {
+            "production": {
+              "budgets": [
+                {
+                  "type": "initial",
+                  "maximumWarning": "500kb",
+                  "maximumError": "1mb"
+                },
+                {
+                  "type": "anyComponentStyle",
+                  "maximumWarning": "2kb",
+                  "maximumError": "4kb"
+                }
+              ],
+              "fileReplacements": [
+                {
+                  "replace": "apps/windows-simulator/src/environments/environment.ts",
+                  "with": "apps/windows-simulator/src/environments/environment.prod.ts"
+                }
+              ],
+              "outputHashing": "all"
+            },
+            "development": {
+              "buildOptimizer": false,
+              "optimization": false,
+              "vendorChunk": true,
+              "extractLicenses": false,
+              "sourceMap": true,
+              "namedChunks": true
+            }
+          },
+          "defaultConfiguration": "production"
+        },
+        "serve": {
+          "builder": "@angular-devkit/build-angular:dev-server",
+          "configurations": {
+            "production": {
+              "browserTarget": "windows-simulator:build:production"
+            },
+            "development": {
+              "browserTarget": "windows-simulator:build:development"
+            }
+          },
+          "defaultConfiguration": "development"
+        },
+        "extract-i18n": {
+          "builder": "@angular-devkit/build-angular:extract-i18n",
+          "options": {
+            "browserTarget": "windows-simulator:build"
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "options": {
+            "lintFilePatterns": [
+              "apps/windows-simulator/src/**/*.ts",
+              "apps/windows-simulator/src/**/*.html"
+            ]
+          }
+        },
+        "test": {
+          "builder": "@nrwl/jest:jest",
+          "outputs": ["coverage/apps/windows-simulator"],
+          "options": {
+            "jestConfig": "apps/windows-simulator/jest.config.js",
+            "passWithNoTests": true
+          }
+        }
+      },
+      "tags": []
+    },
+    "windows-simulator-e2e": {
+      "root": "apps/windows-simulator-e2e",
+      "sourceRoot": "apps/windows-simulator-e2e/src",
+      "projectType": "application",
+      "architect": {
+        "e2e": {
+          "builder": "@nrwl/cypress:cypress",
+          "options": {
+            "cypressConfig": "apps/windows-simulator-e2e/cypress.json",
+            "devServerTarget": "windows-simulator:serve:development",
+            "tsConfig": "apps/windows-simulator-e2e/tsconfig.json"
+          },
+          "configurations": {
+            "production": {
+              "devServerTarget": "windows-simulator:serve:production"
+            }
+          }
+        },
+        "lint": {
+          "builder": "@nrwl/linter:eslint",
+          "outputs": ["{options.outputFile}"],
+          "options": {
+            "lintFilePatterns": ["apps/windows-simulator-e2e/**/*.{js,ts}"]
+          }
+        }
+      },
+      "tags": [],
+      "implicitDependencies": ["windows-simulator"]
+    }
+  }
+}
